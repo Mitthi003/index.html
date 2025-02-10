@@ -22,24 +22,30 @@
         }
         .container {
             background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
+            padding: 15px;
             border-radius: 15px;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
         }
         h1 {
-            font-size: 2em;
+            font-size: 1.5em;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            word-wrap: break-word;
         }
         .buttons {
-            margin-top: 20px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         button {
-            padding: 10px 20px;
+            padding: 10px 15px;
             border: none;
             border-radius: 5px;
             font-size: 1.2em;
             cursor: pointer;
-            margin: 5px;
             transition: transform 0.2s, background 0.3s;
         }
         button:hover {
@@ -48,12 +54,11 @@
         .yes-btn {
             background: #ff4d79;
             color: white;
-            font-size: 1.5em;
+            font-size: 1.2em;
         }
         .no-btn {
             background: #ffb74d;
             color: white;
-            position: absolute;
         }
         .hidden {
             display: none;
@@ -66,19 +71,6 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .heart {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: rgba(255, 0, 0, 0.2);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-            animation: heartAnimation 5s infinite;
-        }
-        @keyframes heartAnimation {
-            0% { transform: scale(0); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.6; }
-            100% { transform: scale(0); opacity: 0; }
-        }
     </style>
 </head>
 <body>
@@ -90,82 +82,27 @@
         </div>
     </div>
     
-    <div id="romantic-text" class="hidden fade-in">
-        <p style="font-size: 1.5em; padding: 20px; max-width: 80%; margin: auto;">
-            I didn’t fall for my crush. I walked into having a crush on you, with my eyes wide open, choosing to take every step along the way. 
-            I do believe in fate and destiny, but I also believe we are only fated to do the things that we'd choose anyway. 
-            And I’d choose you; in a hundred lifetimes, in a hundred worlds, in any version of reality, I’d find you and I’d choose you.
-        </p>
-        <p style="font-size: 1.3em; padding: 20px; max-width: 80%; margin: auto;">
-            Isn't it wild to think that out of the billions of people, the randomness of life, the chaos of the universe—somehow, we met? 
-            Some might call it chance, but I’d like to believe it was meant to be.  
-            Like stars aligning, like gravity pulling planets in orbit, like the way the ocean always meets the shore—some things are just destined to happen.  
-            And right now, in this moment, it’s you and me. The universe did something right.  
+    <div id="romantic-text" class="hidden fade-in" style="max-width: 90%; padding: 10px; font-size: 1.2em;">
+        <p>
+            I didn’t fall for my crush. I walked into having a crush on you, with my eyes wide open, choosing to take every step along the way.
         </p>
     </div>
 
     <script>
         let step = 0;
-        
         function showLoveMessage() {
-            // Hide main container
             document.getElementById("main-container").classList.add("hidden");
-
-            // Show romantic text
             document.getElementById("romantic-text").classList.remove("hidden");
-
-            // Remove all floating "No" buttons
-            document.querySelectorAll(".no-btn").forEach(btn => btn.remove());
-
-            // Add floating light hearts
-            for (let i = 0; i < 20; i++) {
-                let heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.style.animationDelay = `${Math.random() * 5}s`;
-                heart.style.animationDuration = `${Math.random() * 6 + 4}s`;
-                heart.style.left = `${Math.random() * 100}%`;
-                heart.style.top = `${Math.random() * 100}%`;
-                document.body.appendChild(heart);
-            }
         }
-
         function nextStep() {
             step++;
             const question = document.getElementById("question");
-
             if (step === 1) {
-                question.innerText = "Pakka nah ?";
+                question.innerText = "Pakka nah?";
             } else if (step === 2) {
                 question.innerText = "Bolde red flag joh andar se desperately green flag hai!";
-            } else if (step === 3) {
-                question.innerText = "Kitna bhavv khaari hai bolde!";
             } else {
-                document.getElementById("main-container").innerHTML = `
-                    <h1>Nooo, stop dodging! Choose wisely 😏</h1>
-                `;
-
-                for (let i = 0; i < 20; i++) {
-                    let btn = document.createElement("button");
-                    btn.innerText = "No";
-                    btn.className = "no-btn";
-                    btn.onclick = nextStep;
-                    document.body.appendChild(btn);
-
-                    function moveButton() {
-                        btn.style.left = `${Math.random() * 90}%`;
-                        btn.style.top = `${Math.random() * 90}%`;
-                    }
-
-                    moveButton();
-                    setInterval(moveButton, 1000);
-                }
-
-                let yesBtn = document.createElement("button");
-                yesBtn.innerText = "Yes";
-                yesBtn.className = "yes-btn";
-                yesBtn.style.fontSize = "2em";
-                yesBtn.onclick = showLoveMessage;
-                document.body.appendChild(yesBtn);
+                question.innerText = "Kitna bhav khaari hai bolde!";
             }
         }
     </script>
